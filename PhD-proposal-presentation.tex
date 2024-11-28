@@ -1,0 +1,102 @@
+\documentclass[10pt]{beamer}
+
+\usepackage{polyglossia}
+\usepackage{csquotes}
+\usepackage{datetime}
+\usepackage{fontspec}
+\usepackage{microtype}
+\usepackage{color}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage[backend=biber,style=iso-authoryear,sortlocale=en_US,autolang=other,bibencoding=UTF8]{biblatex}
+\usepackage{booktabs}
+\usepackage{graphics}
+\usepackage{pifont}
+\usepackage{ulem}
+\usepackage{tikz}
+
+\addbibresource{zotero.bib}
+
+\setdefaultlanguage{english}
+\setmainfont{TeX Gyre Termes}
+\usetheme{Boadilla}
+\usecolortheme{crane}
+\setbeamertemplate{title page}[default][rounded=true,shadow=false]
+\setbeamertemplate{section in toc}[ball unnumbered]
+\setbeamertemplate{bibliography item}{}
+
+\hypersetup{%
+	pdfencoding=auto,
+	unicode=true,
+	citecolor=green,
+	filecolor=blue,
+	linkcolor=red,
+	urlcolor=blue
+}
+
+\makeatletter
+\newcommand*{\currentSection}{\@currentlabelname}
+\makeatother
+
+%\newcommand{\mathmat}{\ensuremath{\mathbf}}
+
+\title[PhD proposal]
+{%
+	Representation learning for structured data
+}
+
+\newdate{presentation}{29}{11}{2024}
+\date[November 2024]{FJFI ČVUT, \displaydate{presentation}}
+
+\author[Marek Dědič]
+{%
+	Marek~Dědič\inst{1}, \\ \vspace{8pt}
+	\footnotesize{Superviser: prof.~RNDr.~Ing.~Martin~Holeňa,~CSc.}\inst{2}, \\
+	Specialist: Mgr.~Lukáš~Bajer,~Ph.D.\inst{3}
+}
+
+\institute[FJFI ČVUT]
+{%
+	\inst{1} Faculty of Nuclear Sciences and Physical Engineering, Czech Technical University in Prague \and
+	\inst{2} Institute of Computer Science, Czech Academy of Sciences \and
+	\inst{3} Cisco Systems, Inc.
+}
+
+% Title card
+\AtBeginSection[]{%
+	\begin{frame}
+		\vfill
+		\centering
+		\begin{beamercolorbox}[sep = 8pt,center,shadow = true,rounded = true]{title}
+			\usebeamerfont{title}\insertsectionhead\par%
+		\end{beamercolorbox}
+		\vfill
+	\end{frame}
+}
+
+%\AtBeginSection[]{%
+	%\begin{frame}{\currentSection}
+		%\tableofcontents[currentsection]
+	%\end{frame}
+%}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Bibliography}
+	\printbibliography
+\end{frame}
+
+\end{document}
+
