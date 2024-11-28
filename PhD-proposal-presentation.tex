@@ -102,12 +102,12 @@
 	\end{itemize}
 
 	\centering
-	\includegraphics[width=0.7\pagewidth]{images/graphs.png}\footnote{\cite{velickovic_opening_2020}}
+	\includegraphics[width=0.7\pagewidth]{images/graphs.png}\footcite{velickovic_opening_2020}
 \end{frame}
 
 \section{Contributions}
 
-\begin{frame}{The performance-complexity trade-off\footnote{\cite{prochazka_scalable_2022, dedic_balancing_2023, dedic_balancing_2024}}}
+\begin{frame}{The performance-complexity trade-off\footcite{prochazka_scalable_2022, dedic_balancing_2023, dedic_balancing_2024}}
 	\begin{itemize}
 		\item<1|only@1> Sequence of graphs \( G_0, G_1, G_2, \dots, G_L \) where \( G_0 = G \)
 		\item<1|only@1> Model \( M \), a performance metric, a complexity metric
@@ -122,7 +122,7 @@
 	\includegraphics[width=0.6\linewidth]{images/performance-complexity-schema/performance-complexity-schema.pdf}
 \end{frame}
 
-\begin{frame}{A HARP-based method for performance-complexity balancing\footnote{\cite{dedic_balancing_2024}}}
+\begin{frame}{A HARP-based method for performance-complexity balancing\footcite{dedic_balancing_2024}}
 	\begin{itemize}
 		\item HARP -- a method for pretraining on simplified graphs
 		\item Embedding trained first on the coarser graph
@@ -159,13 +159,37 @@
 
 \begin{frame}{A HARP-based method for performance-complexity balancing}
 	\begin{itemize}
-		\item Headline result: at 60\% complexity, the models have over a 99\% probability of being within 10 percentage points of performance on the full graph and at 80\% complexity, they have over 99\% probability of being withing 5 percentage points of performance.
+		\item Headline result: At 60\% complexity, the models have over a 99\% probability of being within 10 percentage points of performance on the full graph and at 80\% complexity, they have over 99\% probability of being withing 5 percentage points of performance.
 	\end{itemize}
 
 	\vfill
 
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/adaptive-coarsening/adaptive-coarsening.pdf}
+\end{frame}
+
+\begin{frame}{A direct approach to graph coarsening\footcite{prochazka_scalable_2022}}
+	\begin{itemize}
+		\item Alternative, direct approach to coarsening
+		\item Orders edges based on the similarity of their predictive posterior distribution under an auxiliary model
+		\item Edge ordering defines the sequence \( G_0, G_1, \dots, G_L \)
+	\end{itemize}
+
+	\vfill
+
+	\centering
+	\includegraphics[width=0.9\linewidth]{images/edge-contraction-sequence/edge-contraction-sequence.pdf}
+\end{frame}
+
+\begin{frame}{A direct approach to graph coarsening}
+	\begin{itemize}
+		\item Simpler, less powerful
+	\end{itemize}
+
+	\vspace{-25pt}
+
+	\centering
+	\includegraphics[width=\linewidth]{images/direct-graph-coarsening-results.eps}
 \end{frame}
 
 \begin{frame}
@@ -175,7 +199,7 @@
 \begin{frame}{Opponent's questions}
 	\textbf{Q1:} On figure 3.3, the performance of the downstream classifiers for ArXiv and Coauthors-CS graphs consistently improves, while other graphs achieve performance of the full model around 70\% mark, at the latest. Do you have any insights why the two graphs behave differently?
 	\begin{center}
-		\includegraphics[width=0.5\pagewidth]{images/adaptive-coarsening/adaptive-coarsening.pdf}\footnote{\cite{dedic_balancing_2024}}
+		\includegraphics[width=0.5\pagewidth]{images/adaptive-coarsening/adaptive-coarsening.pdf}\footcite{dedic_balancing_2024}
 	\end{center}
 
 	\textbf{A:} We evaluated several graph metrics over the refinement procedure. The values of these metrics were compared to the classification accuracy and a strong correlation was found for the majority of them, with correlation coeffcient of −0.66 for global assortativity and between 0.94 and 0.96 for all the other metrics,.
@@ -193,7 +217,7 @@
 	\textbf{A:} We haven't considered the Louvain algorithm specifically, but we have considered alternative coarsening schemes based on graph diffusion (Personalized PageRank \& Heat diffusion) and an evolved coarsening in our previous work \cite{dedic_adaptive_2022}.
 
 	\centering
-	\includegraphics[width=0.7\pagewidth]{images/alternative-coarsening-algorithms/alternative-coarsening-algorithms.pdf}\footnote{\cite{dedic_adaptive_2022}}
+	\includegraphics[width=0.7\pagewidth]{images/alternative-coarsening-algorithms/alternative-coarsening-algorithms.pdf}\footcite{dedic_adaptive_2022}
 \end{frame}
 
 \begin{frame}{Opponent's questions}
