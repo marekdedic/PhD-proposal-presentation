@@ -1,0 +1,134 @@
+\RequirePackage{luatex85}
+\documentclass[tikz]{standalone}
+
+\usepackage{polyglossia}
+\usepackage{fontspec}
+\usepackage{csquotes}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
+
+\setdefaultlanguage{english}
+\setmainfont{TeX Gyre Termes}
+
+\usetikzlibrary{hobby}
+
+\newcommand{\mathvec}{\ensuremath{\vec}}
+
+\begin{document}
+
+\begin{tikzpicture}[use Hobby shortcut]
+	\tikzstyle{Node} = [fill = white, draw = black, shape = circle, line width = 0.75]
+	\tikzstyle{NegNode} = [fill = blue!40!white, draw = black, shape = circle, line width = 0.75]
+	\tikzstyle{PosNode} = [fill = red!40!white, draw = black, shape = circle, line width = 0.75]
+	\tikzstyle{Edge} = [draw = black, line width = 0.75]
+	\tikzstyle{Train} = [closed, dashed, line width = 0.4, color = violet!80!white, fill = violet!5!white]
+	\tikzstyle{Test} = [closed, dashed, line width = 0.4, color = black!40!green!80!white, fill = black!10!green!5!white]
+
+	\def\x1{0}
+	\def\y1{0}
+
+	%\draw [style = Train] (\x1 + -0.25, \y1 + -0.15) .. (\x1 + 0, \y1 + 1.65) .. (\x1 + 0.35, \y1 + 1.8) .. (\x1 + 1, \y1 + 1.25) .. (\x1 + 2.3, \y1 + 0.2) .. (\x1 + 2.25, \y1 + -0.2);
+	%\draw [style = Test] (\x1 + 1.2, \y1 + 2) .. (\x1 + 1.8, \y1 + 2) .. (\x1 + 2.8, \y1 + 1.1) .. (\x1 + 2.8, \y1 + 0.8) .. (\x1 + 2.4, \y1 + 0.7) .. (\x1 + 1.3, \y1 + 1.2) .. (\x1 + 1, \y1 + 1.6);
+	\draw [style = Train] (\x1 + -0.25, \y1 + -0.2) .. (\x1 + -0.2, \y1 + 0.5) .. (\x1 + 1, \y1 + 0.8) .. (\x1 + 2.4, \y1 + 1.3) .. (\x1 + 2.7, \y1 + 1.2) .. (\x1 + 2.8, \y1 + 0.7) .. (\x1 + 2.3, \y1 + -0.1) .. (\x1 + 2.15, \y1 + -0.25) .. (\x1 + 1, \y1 + -0.8);
+	\node [style = Train, fill = none] at (\x1 + 0.9, \y1 + -0.45) {\tiny Train};
+	\draw [style = Test] (\x1 + 0, \y1 + 1.65) .. (\x1 + 0.35, \y1 + 1.8) .. (\x1 + 1.4, \y1 + 2) .. (\x1 + 1.8, \y1 + 1.9) .. (\x1 + 1.8, \y1 + 1.5) .. (\x1 + 1, \y1 + 1.1) .. (\x1 + 0, \y1 + 1.2);
+	\node [style = Test, fill = none] at (\x1 + 0.9, \y1 + 1.35) {\tiny Test};
+
+	\node [style = NegNode, label = 225:$\mathvec{x}_1$] (1_1) at (\x1 + 0, \y1 + 0) {};
+	\node [style = NegNode, label = 135:$\mathvec{x}_2$] (1_2) at (\x1 + 0.25, \y1 + 1.5) {};
+	\node [style = NegNode, label = 315:$\mathvec{x}_3$] (1_3) at (\x1 + 2, \y1 + 0) {};
+	\node [style = PosNode, label = 45:$\mathvec{x}_4$] (1_4) at (\x1 + 2.5, \y1 + 1) {};
+	\node [style = PosNode, label = 90:$\mathvec{x}_5$] (1_5) at (\x1 + 1.5, \y1 + 1.75) {};
+	\draw [style = Edge] (1_1) to (1_2);
+	\draw [style = Edge] (1_1) to (1_3);
+	\draw [style = Edge] (1_2) to (1_3);
+	\draw [style = Edge] (1_2) to (1_5);
+	\draw [style = Edge] (1_3) to (1_4);
+	\draw [style = Edge] (1_4) to (1_5);
+
+	\draw [->] (3.5, 1) -- node[above] {Coarsen} ++ (1.5, 0);
+
+	\def\x2{6}
+	\def\y2{0}
+	\node [style = Node, label = 225:$\mathvec{x}_{1+2}$] (2_1) at (\x2 + 0, \y2 + 0) {};
+	\node [style = Node, label = 315:$\mathvec{x}_3$] (2_3) at (\x2 + 2, \y2 + 0) {};
+	\node [style = Node, label = 45:$\mathvec{x}_4$] (2_4) at (\x2 + 2.5, \y2 + 1) {};
+	\node [style = Node, label = 90:$\mathvec{x}_5$] (2_5) at (\x2 + 1.5, \y2 + 1.75) {};
+	\draw [style = Edge] (2_1) to (2_3);
+	\draw [style = Edge] (2_1) to (2_5);
+	\draw [style = Edge] (2_3) to (2_4);
+	\draw [style = Edge] (2_4) to (2_5);
+
+	\draw [->] (9.75, 1) -- node[above] {Embed} ++ (1.5, 0);
+	%\node [color = green!60!black] at (11.5, 2) {$\$\$\$$};
+	%\draw [->, bend right, color = green!60!black] (11.1, 2) to (10.3, 1.5);
+
+	\def\x3{12.5}
+	\def\y3{0}
+	\node [style = Node, label = 225:{$\mathvec{x}_{1+2}$, $\mathvec{e}_{1+2}$}] (3_1) at (\x3 + 0, \y3 + 0) {};
+	\node [style = Node, label = 315:{$\mathvec{x}_3$, $\mathvec{e}_3$}] (3_3) at (\x3 + 2, \y3 + 0) {};
+	\node [style = Node, label = 45:{$\mathvec{x}_4$, $\mathvec{e}_4$}] (3_4) at (\x3 + 2.5, \y3 + 1) {};
+	\node [style = Node, label = 90:{$\mathvec{x}_5$, $\mathvec{e}_5$}] (3_5) at (\x3 + 1.5, \y3 + 1.75) {};
+	\draw [style = Edge] (3_1) to (3_3);
+	\draw [style = Edge] (3_1) to (3_5);
+	\draw [style = Edge] (3_3) to (3_4);
+	\draw [style = Edge] (3_4) to (3_5);
+
+	\draw [->] (-1, -3) -- node[above] {Prolong} ++ (1.5, 0);
+
+	\def\x4{1.5}
+	\def\y4{-4}
+	\node [style = Node, label = 225:{$\mathvec{x}_1$, $\mathvec{e}_{1+2}$}] (4_1) at (\x4 + 0, \y4 + 0) {};
+	\node [style = Node, label = 135:{$\mathvec{x}_2$, $\mathvec{e}_{1+2}$}] (4_2) at (\x4 + 0.25, \y4 + 1.5) {};
+	\node [style = Node, label = 315:{$\mathvec{x}_3$, $\mathvec{e}_3$}] (4_3) at (\x4 + 2, \y4 + 0) {};
+	\node [style = Node, label = 45:{$\mathvec{x}_4$, $\mathvec{e}_4$}] (4_4) at (\x4 + 2.5, \y4 + 1) {};
+	\node [style = Node, label = 90:{$\mathvec{x}_5$, $\mathvec{e}_5$}] (4_5) at (\x4 + 1.5, \y4 + 1.75) {};
+	\draw [style = Edge] (4_1) to (4_2);
+	\draw [style = Edge] (4_1) to (4_3);
+	\draw [style = Edge] (4_2) to (4_3);
+	\draw [style = Edge] (4_2) to (4_5);
+	\draw [style = Edge] (4_3) to (4_4);
+	\draw [style = Edge] (4_4) to (4_5);
+
+	\draw [->] (5.5, -3) -- node[above] {Embed} ++ (1.5, 0);
+
+	\def\x5{8}
+	\def\y5{-4}
+
+	\node [style = Node, label = 225:{$\mathvec{x}_1$, $\mathvec{e}_1$}] (4_1) at (\x5 + 0, \y5 + 0) {};
+	\node [style = Node, label = 135:{$\mathvec{x}_2$, $\mathvec{e}_2$}] (4_2) at (\x5 + 0.25, \y5 + 1.5) {};
+	\node [style = Node, label = 315:{$\mathvec{x}_3$, $\mathvec{e}_3$}] (4_3) at (\x5 + 2, \y5 + 0) {};
+	\node [style = Node, label = 45:{$\mathvec{x}_4$, $\mathvec{e}_4$}] (4_4) at (\x5 + 2.5, \y5 + 1) {};
+	\node [style = Node, label = 90:{$\mathvec{x}_5$, $\mathvec{e}_5$}] (4_5) at (\x5 + 1.5, \y5 + 1.75) {};
+	\draw [style = Edge] (4_1) to (4_2);
+	\draw [style = Edge] (4_1) to (4_3);
+	\draw [style = Edge] (4_2) to (4_3);
+	\draw [style = Edge] (4_2) to (4_5);
+	\draw [style = Edge] (4_3) to (4_4);
+	\draw [style = Edge] (4_4) to (4_5);
+
+	\draw [->] (11.75, -3) -- node[above] {Classify} ++ (1.5, 0);
+
+	\def\x6{14}
+	\def\y6{-4}
+
+	\draw [style = Train] (\x6 + -0.25, \y6 + -0.2) .. (\x6 + -0.2, \y6 + 0.5) .. (\x6 + 1, \y6 + 0.8) .. (\x6 + 2.4, \y6 + 1.3) .. (\x6 + 2.7, \y6 + 1.2) .. (\x6 + 2.8, \y6 + 0.7) .. (\x6 + 2.3, \y6 + -0.1) .. (\x6 + 2.15, \y6 + -0.25) .. (\x6 + 1, \y6 + -0.8);
+	\node [style = Train, fill = none] at (\x6 + 0.9, \y6 + -0.45) {\tiny Train};
+	\draw [style = Test] (\x6 + 0, \y6 + 1.65) .. (\x6 + 0.35, \y6 + 1.8) .. (\x6 + 1.4, \y6 + 2) .. (\x6 + 1.8, \y6 + 1.9) .. (\x6 + 1.8, \y6 + 1.5) .. (\x6 + 1, \y6 + 1.1) .. (\x6 + 0, \y6 + 1.2);
+	\node [style = Test, fill = none] at (\x6 + 0.9, \y6 + 1.35) {\tiny Test};
+
+	\node [style = NegNode] (4_1) at (\x6 + 0, \y6 + 0) {};
+	\node [style = Node, label = 100:{$y_2 = 0$ \tiny{(pred.)}}] (4_2) at (\x6 + 0.25, \y6 + 1.5) {};
+	\node [style = PosNode] (4_3) at (\x6 + 2, \y6 + 0) {};
+	\node [style = PosNode] (4_4) at (\x6 + 2.5, \y6 + 1) {};
+	\node [style = Node, label = 90:{$y_5 = 1$ \tiny{(pred.)}}] (4_5) at (\x6 + 1.5, \y6 + 1.75) {};
+	\draw [style = Edge] (4_1) to (4_2);
+	\draw [style = Edge] (4_1) to (4_3);
+	\draw [style = Edge] (4_2) to (4_3);
+	\draw [style = Edge] (4_2) to (4_5);
+	\draw [style = Edge] (4_3) to (4_4);
+	\draw [style = Edge] (4_4) to (4_5);
+
+\end{tikzpicture}
+
+\end{document}
