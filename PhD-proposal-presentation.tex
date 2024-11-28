@@ -192,9 +192,25 @@
 	\includegraphics[width=\linewidth]{images/direct-graph-coarsening-results.eps}
 \end{frame}
 
+\begin{frame}{The effect of graph properties on downstream task performance\footcite{prochazka_which_2023}}
+	\begin{itemize}
+		\item How data are transformed into a graph may affect the performance of the downstream task in a profound way.
+		\item Step 1: Measuring and predicting the suitability of a given graph representation to a given downstream task.
+		\item Measured 17 different graph properties on 7 standard graphs -- 139 data points
+		\item Trained a GraphSAGE model and evaluated 5 performance metrics
+		\item Using a meta-model, we measured the importance of the properties
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{The effect of graph properties on downstream task performance}
+	\includegraphics[width=\linewidth]{images/graph-property-importance.pdf}
+\end{frame}
+
 \begin{frame}
 	\titlepage
 \end{frame}
+
+\section{Opponent's questions}
 
 \begin{frame}{Opponent's questions}
 	\textbf{Q1:} On figure 3.3, the performance of the downstream classifiers for ArXiv and Coauthors-CS graphs consistently improves, while other graphs achieve performance of the full model around 70\% mark, at the latest. Do you have any insights why the two graphs behave differently?
