@@ -1,6 +1,7 @@
 \documentclass[10pt]{beamer}
 
 \usepackage{polyglossia}
+\usepackage{adjustbox}
 \usepackage{csquotes}
 \usepackage{datetime}
 \usepackage{fontspec}
@@ -43,6 +44,8 @@
 \makeatother
 
 %\newcommand{\mathmat}{\ensuremath{\mathbf}}
+\newcommand{\vdeg}{\mathrm{d}} % degree of node or edge
+\newcommand{\edeg}{\delta} % degree of node or edge
 
 \title[PhD proposal]
 {%
@@ -94,9 +97,78 @@
 	\titlepage
 \end{frame}
 
+\begin{frame}{Opponent's questions}
+	\textbf{Q1:} On figure 3.3, the performance of the downstream classifiers for ArXiv and Coauthors-CS graphs consistently improves, while other graphs achieve performance of the full model around 70\% mark, at the latest. Do you have any insights why the two graphs behave differently?
+	\begin{center}
+		\includegraphics[width=0.5\pagewidth]{images/adaptive-coarsening/adaptive-coarsening.pdf}\footnote{\cite{dedic_balancing_2024}}
+	\end{center}
+
+	\textbf{A:} We evaluated several graph metrics over the refinement procedure. The values of these metrics were compared to the classification accuracy and a strong correlation was found for the majority of them, with correlation coeffcient of −0.66 for global assortativity and between 0.94 and 0.96 for all the other metrics,.
+\end{frame}
+
+\begin{frame}{Opponent's questions}
+	\textbf{Q2:} As for the coarsening of the graph, do you have a computational time analysis? How much time it takes to run the coarsening and what is the speedup of the ML model?
+
+	\textbf{A:} We don't have a rigorous computational analysis. The coarsening algorithm generally scales linearly w.r.t.\ the number of nodes. On the experimental data, it took tenths of seconds to a few minutes to run, depending on the dataset. The graph algorithm itself also scales linearly w.r.t.\ the number of nodes.
+\end{frame}
+
+\begin{frame}{Opponent's questions}
+	\textbf{Q3:} Have you considered a community detection algorithm (like Louvain algorithm) or some of its versions tailored to coarsening graphs for ML tasks?
+
+	\textbf{A:} We haven't considered the Louvain algorithm specifically, but we have considered alternative coarsening schemes based on graph diffusion (Personalized PageRank \& Heat diffusion) and an evolved coarsening in our previous work \cite{dedic_adaptive_2022}.
+
+	\centering
+	\includegraphics[width=0.7\pagewidth]{images/alternative-coarsening-algorithms/alternative-coarsening-algorithms.pdf}\footnote{\cite{dedic_adaptive_2022}}
+\end{frame}
+
+\begin{frame}{Opponent's questions}
+	\textbf{Q4:} It would be interesting to see how the generic coarsening algorithm (i.e.\ your CSP) compare to an informed (problem/data aware) heuristics and its effects on model’s performance and time-requirements.
+
+	\textbf{A:} In \cite{prochazka_convolutional_2024}, we compared CSP with methods such as the Naive Bayes classifier, logistic regression, random forrests and hypergraph GCNs. Both performance and time requirements were compared.
+\end{frame}
+
+\begin{frame}{Opponent's questions}
+	\textbf{Q5:} I would also look at meta-learning field and maybe there would be a way to steer the graph coarsening algorithms based on properties of a specific graph.
+
+	\textbf{A:} A preliminary examination of that is covered in \cite{prochazka_scalable_2022}, but more research is needed. The interplay of meta-learning and graph properties is also the main topic of ongoing work outlined in Section 4.3, based on our previous work \cite{prochazka_which_2023}.
+\end{frame}
+
+\begin{frame}{Opponent's questions}
+	\textbf{Q6:} What kind of cybersecurity do you have in mind? (Network monitoring, intrusion detection, malware detection, …) Do you have sources of cybersecurity related datasets? Do you have expert insights on the datasets?
+
+	\textbf{A:} Network traffic analysis primarily. We do have in-house experts.
+\end{frame}
+
+\begin{frame}{Opponent's questions}
+	\textbf{Q7:} How much work would be to transfer the approach to another domain (i.e.\ financial transaction analysis)?
+
+	\textbf{A:} We haven't tried financial transaction analysis specifically, but include datasets from multiple domains:
+
+	\begin{center}
+		\adjustbox{width=\columnwidth}{%
+			\begin{tabular}{lrrrrrrrrr}
+				\toprule
+				\textbf{Dataset} & \textbf{CiteSeer} & \textbf{Cora-CA}  & \textbf{Cora-CC}  & \textbf{DBLP} & \textbf{PubMed}   & \textbf{Corona} & \textbf{Walmar} & \textbf{movie-RA} & \textbf{movie-TA}\\
+				\midrule
+				\textbf{Node} & paper & paper & paper & paper & paper & text & product  & movie & movie \\
+				\textbf{Node label} & topic & topic & topic & topic & topic & sentiment & category & category & category \\
+				\textbf{Hyperedge} & citation & author & citation & author & citation & token & co-purchase & user & tag\\
+				\midrule
+				\textbf{Nodes}  & 3312 & 2708 & 2708 & 41302 & 19717 & 44955 & 88860 & 62423 & 62423\\
+				\textbf{Isolated nodes} & 1854 & 320 & 1274 & 0 & 15877 & 0 & 1 & 3376 & 17172\\
+				\textbf{Hyperedges}  & 1079 & 1072 & 1579 & 22363 & 7963 & 998 & 69906 & 162541 & 14592\\
+				\( \boldsymbol{\Sigma}_E \)  & 3453 & 4585 & 4786 & 99561 & 34629 & 3455918 & 460629 & 25000095 & 1093360\\
+				\textbf{Average \( \vdeg \left( v \right) \)} & 2.37 & 1.92 & 3.34 & 2.41 & 9.02 & 76.88 & 6.58 & 423.39 & 24.16\\
+				\textbf{Average \( \edeg \left( e \right) \)} & 3.20 & 4.28 & 3.03 & 4.45 & 4.35 & 3463 & 5.18 & 153.8 & 74.9\\
+				\textbf{Classes} & 6 & 7 & 7 & 6 & 3 & 5 & 11 & 20 & 20\\
+				\bottomrule
+			\end{tabular}
+		}
+	\end{center}
+\end{frame}
+
 \begin{frame}[allowframebreaks]{Bibliography}
 	\printbibliography
 \end{frame}
 
 \end{document}
-
