@@ -45,6 +45,7 @@
 \makeatother
 
 %\newcommand{\mathmat}{\ensuremath{\mathbf}}
+\newcommand{\mathvec}{\ensuremath{\mathbf}}
 \newcommand{\vdeg}{\mathrm{d}} % degree of node or edge
 \newcommand{\edeg}{\delta} % degree of node or edge
 
@@ -111,6 +112,7 @@
 			\item The graph performance-complexity trade-off
 			\item A HARP-based approach to solving it
 			\item A direct approach to solving it
+			\item A simple, scalable algorithm for signal propagation in hypergraphs
 			\item The effect of graph properties on GNN performance
 		\end{itemize}
 		\item Intended research directions
@@ -218,6 +220,30 @@
 	\includegraphics[width=\linewidth]{images/direct-graph-coarsening-results.eps}
 \end{frame}
 
+\begin{frame}{A simple, scalable algorithm for signal propagation in hypergraphs\footcite{prochazka_convolutional_2024}}
+	\begin{itemize}
+		\item<1-> If we had a simple model, we wouldn't need to coarsen graphs
+		\item<2-> \textit{Convolutional Signal Propagation} is a simple algorithm operating on hypergraphs
+		\item<3-> We first propagate signal \( \mathvec{x}^{(l)} \) from nodes to edges:
+			\[
+				\mathvec{r}_j^{(l)}=\frac{1}{\edeg \left( e_j \right)}\sum_{\substack{i \\ v_i\in e_j}} \mathvec{x}_i^{(l)}
+			\]
+		\item<4-> And then propagate it back to nodes:
+			\[
+				\mathvec{x}_k^{(l+1)}=\frac{1}{\vdeg \left( v_k \right)}\sum_{\substack{j \\ v_k \in e_j}} \mathvec{r}_j^{(l)}
+			\]
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{A simple, scalable algorithm for signal propagation in hypergraphs}
+	\begin{itemize}
+		\item<1-> Evaluated for classification and retrieval
+		\item<2-> Doesn't beat SoTA
+		\item<3-> Usually withing 5 p.p.\ of SoTA
+		\item<4-> 4 OOM faster than SoTA
+	\end{itemize}
+\end{frame}
+
 \begin{frame}{The effect of graph properties on downstream task performance\footcite{prochazka_which_2023}}
 	\begin{itemize}
 		\item<1-> How data are transformed into a graph may affect the performance of the downstream task in a profound way.
@@ -279,6 +305,7 @@
 			\item Formalized the graph performance-complexity trade-off
 			\item Introduced a HARP-based approach to solving it
 			\item Introduced a simplified direct approach to solving it
+			\item Introduced CSP: A simple, scalable algorithm for signal propagation in hypergraphs
 			\item Studied the effect of graph properties on GNN performance
 		\end{itemize}
 		\item Intended research directions
